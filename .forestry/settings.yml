@@ -29,6 +29,8 @@ sections:
   label: Contact
   templates:
   - contact
+- type: heading
+  label: Content
 - type: directory
   path: src/pages
   label: Page
