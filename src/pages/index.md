@@ -8,9 +8,7 @@ sections:
   component: Intro
   content: Here you can find my thoughts on digital and tech strategy, that I write
     for my partners, colleagues and clients.
-  actions:
-  - label: Learn More
-    url: "/about"
+  actions: []
 menus:
   main:
     title: Home
