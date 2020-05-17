@@ -39,6 +39,5 @@ fields:
 pages:
 - src/pages/posts/basic-rules-for-walking-in-the-mountains.md
 - src/pages/posts/migrate-your-legacy-now-and-migrate-it-to-serverless.md
-- src/pages/posts/relax-in-nature.md
 - src/pages/posts/what-isphotography.md
 - src/pages/posts/working-from-home.md
