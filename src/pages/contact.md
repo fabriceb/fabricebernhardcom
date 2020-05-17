@@ -1,5 +1,5 @@
 ---
-title: 2020 Cloud Strategy
+title: Contact me
 img_path: images/contact.jpg
 menus:
   main:
