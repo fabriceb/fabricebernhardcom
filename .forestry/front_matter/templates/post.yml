@@ -38,4 +38,5 @@ fields:
     required: true
 pages:
 - src/pages/posts/basic-rules-for-walking-in-the-mountains.md
+- src/pages/posts/lean-vs-agile-the-lean-manifesto.md
 - src/pages/posts/migrate-your-legacy-now-and-migrate-it-to-serverless.md
