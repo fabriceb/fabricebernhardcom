@@ -1,6 +1,6 @@
 ---
-title: Fabrice Bernhard - About Me
-subtitle: This is a short page about me and my work
+title: Fabrice Bernhard
+subtitle: ''
 img_path: "/images/fabriceb03-2.jpg"
 menus:
   main:
