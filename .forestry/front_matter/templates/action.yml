@@ -6,9 +6,39 @@ fields:
 - type: text
   name: label
   label: Label
-  description: The text displayed inside the button
   config:
     required: true
 - type: text
   name: url
-  label: Button URL
+  label: URL
+  config:
+    required: true
+- type: select
+  name: style
+  label: Style
+  default: link
+  config:
+    required: true
+    source:
+      type: custom
+    options:
+    - link
+    - primary
+    - secondary
+    - icon
+- type: text
+  name: icon_class
+  label: Icon
+  description: Font Awesome icon class name, used only when style is "icon".
+- type: boolean
+  name: new_window
+  label: Open in new tab/window
+  default: false
+- type: text
+  name: type
+  label: Object Type
+  description: The type of the object
+  hidden: true
+  default: action
+  config:
+    required: true

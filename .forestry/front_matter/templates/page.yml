@@ -12,16 +12,23 @@ fields:
   name: subtitle
   label: Subtitle
   description: The text shown just below the page title.
+- type: text
+  name: excerpt
+  label: Excerpt
+  description: The excerpt of the page displayed in meta data.
 - type: file
   name: img_path
   label: Image
   description: The image shown below the page title and subtitle.
 - type: text
-  name: template
-  label: Template
+  name: layout
+  label: Layout
   hidden: true
   default: page
   config:
     required: true
 pages:
-- src/pages/about.md
+- content/about.md
+- content/contact-success.md
+- content/style-guide.md
+- content/subscribe-success.md

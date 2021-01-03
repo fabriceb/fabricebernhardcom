@@ -2,68 +2,43 @@
 new_page_extension: md
 auto_deploy: false
 admin_path: static/admin
-webhook_url: https://api.stackbit.com/project/5db091dc8b82fb001b257610/webhook/forestry
+webhook_url: https://api.stackbit.com/project/5fef4c1f1ff91e0015889112/webhook/forestry
 sections:
 - type: document
-  path: site-metadata.json
-  label: Global Site Config
+  path: config.yaml
+  label: Site Configuration
   templates:
   - config
 - type: document
-  path: src/data/social.json
-  label: Social Links
-  templates:
-  - social
-- type: document
-  path: src/data/author.json
-  label: Author
-  templates:
-  - author
-- type: document
-  path: src/pages/index.md
+  path: content/_index.md
   label: Home
   templates:
   - home
 - type: document
-  path: src/pages/contact.md
+  path: content/contact.md
   label: Contact
   templates:
   - contact
-- type: heading
-  label: Content
 - type: directory
-  path: src/pages
-  label: Page
+  path: content
+  label: Pages
   create: all
   match: "**/*"
-  exclude: "{posts/**,index.md,contact.md}"
+  new_doc_ext: md
   templates:
   - page
-- type: directory
-  path: src/pages/posts
-  label: Post
-  create: all
-  match: "**/*"
-  templates:
   - post
-- type: document
-  path: src/data/subscribe.json
-  label: Subscribe
-  templates:
-  - subscribe
-- type: document
-  path: src/data/menus.json
-  label: Site Menus
-  templates:
-  - site_menus
 upload_dir: static/images
 public_path: "/images"
 front_matter_path: ''
 use_front_matter_path: false
 file_template: ":filename:"
 build:
+  preview_env:
+  - HUGO_ENV=staging
+  - HUGO_VERSION=0.47
   preview_output_directory: public
-  install_dependencies_command: npm install
-  preview_docker_image: node:10
+  preview_docker_image: forestryio/hugo:latest
   mount_path: "/srv"
-  instant_preview_command: npm run forestry:preview
+  instant_preview_command: hugo server -D -E -F --renderToDisk -d public
+version: '0.48'

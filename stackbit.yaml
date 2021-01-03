@@ -1,57 +1,43 @@
-stackbitVersion: ~0.2.0
-ssgName: gatsby
-ssgVersion: 0.1.12
-buildCommand: ./ssg-build.sh
+stackbitVersion: ~0.3.0
+ssgName: hugo
+ssgVersion: '0.48'
+buildCommand: hugo
 publishDir: public
 staticDir: static
 uploadDir: images
-dataDir: src/data
-pagesDir: src/pages
-pageLayoutKey: template
-metadata:
-  title: Ampersand
-  description: Medium inspired blogging theme
-  author: Stackbit
-  authorURL: 'https://www.stackbit.com'
-  images:
-    small: images/demo-256x192.png
-    large: images/demo-1024x768.png
+dataDir: data
+pagesDir: content
+pageLayoutKey: layout
+pageData:
+  - pagePath: /
+    initialExpandedPaths:
+      - '[0]'
+      - '[0].fields.intro_content'
+      - '[0].fields.intro_actions'
+      - '[1]'
+      - '[1].fields.layout_style'
+      - '[1].fields.palette'
 sourceMapping:
-  - source:
-      fieldPath: author.name
-    target:
-      file: data/author.json
-      fieldPath: name
   - source:
       fieldPath: author.name
     target:
       file: config.yml
       fieldPath: params.header.title
   - source:
-      fieldPath: author.email
-    target:
-      file: data/author.json
-      fieldPath: email
-  - source:
-      fieldPath: author.avatar
-    target:
-      file: data/author.json
-      fieldPath: avatar
-  - source:
       fieldPath: 'social.links[0].url'
     target:
-      file: data/social.json
-      fieldPath: 'links[0].url'
+      file: config.yml
+      fieldPath: 'params.footer.social_links[0].url'
   - source:
       fieldPath: author.tagline
     target:
       file: content/index.md
-      fieldPath: 'sections[0].content'
+      fieldPath: intro_content
   - action: delete
     condition: context.author.tagline
     target:
       file: content/index.md
-      fieldPath: 'sections[0].actions'
+      fieldPath: intro_actions
   - action: delete
     condition: context.author.name
     target:
@@ -60,58 +46,58 @@ sourceMapping:
   - source:
       fieldPath: social.twitter.url
     target:
-      file: data/social.json
-      fieldPath: 'links[0].url'
+      file: config.yml
+      fieldPath: 'params.footer.social_links[0].url'
   - source:
       fieldPath: social.instagram.url
     target:
-      file: data/social.json
-      fieldPath: 'links[1].url'
+      file: config.yml
+      fieldPath: 'params.footer.social_links[1].url'
   - source:
       fieldPath: social.github.url
     target:
-      file: data/social.json
-      fieldPath: 'links[2].url'
+      file: config.yml
+      fieldPath: 'params.footer.social_links[2].url'
   - source:
       fieldPath: social.linkedin.url
     target:
-      file: data/social.json
-      fieldPath: 'links[3].url'
+      file: config.yml
+      fieldPath: 'params.footer.social_links[3].url'
   - source:
       fieldPath: social.devto.url
     target:
-      file: data/social.json
-      fieldPath: 'links[4].url'
+      file: config.yml
+      fieldPath: 'params.footer.social_links[4].url'
   - action: delete
     condition: context.social && !context.social.devto
     target:
-      file: data/social.json
-      fieldPath: 'links[4]'
+      file: config.yml
+      fieldPath: 'params.footer.social_links[4]'
   - action: delete
     condition: context.social && !context.social.linkedin
     target:
-      file: data/social.json
-      fieldPath: 'links[3]'
+      file: config.yml
+      fieldPath: 'params.footer.social_links[3]'
   - action: delete
     condition: context.social && !context.social.github
     target:
-      file: data/social.json
-      fieldPath: 'links[2]'
+      file: config.yml
+      fieldPath: 'params.footer.social_links[2]'
   - action: delete
     condition: context.social && !context.social.instagram
     target:
-      file: data/social.json
-      fieldPath: 'links[1]'
+      file: config.yml
+      fieldPath: 'params.footer.social_links[1]'
   - action: delete
     condition: context.social && !context.social.twitter
     target:
-      file: data/social.json
-      fieldPath: 'links[0]'
+      file: config.yml
+      fieldPath: 'params.footer.social_links[0]'
   - source:
       fieldPath: source.title
     target:
       file: config.yml
-      fieldPath: 'params.footer.links[1].text'
+      fieldPath: 'params.footer.links[1].label'
   - source:
       fieldPath: source.url
     target:
@@ -123,136 +109,180 @@ sourceMapping:
     target:
       file: config.yml
       fieldPath: 'params.footer.links[1].new_window'
-stackbit_banner:
-  show_banner: true
-  name: Ampersand
-  create_url: 'https://app.stackbit.com/create?theme=ampersand'
-  github_url: 'https://github.com/stackbithq/stackbit-theme-ampersand'
+  - source:
+      value: link
+    condition: context.source.url
+    target:
+      file: config.yml
+      fieldPath: 'params.footer.links[1].style'
 models:
   config:
     type: config
-    label: Global Site Config
+    label: Site Configuration
     fields:
       - type: string
         name: title
         label: Title
         description: Site title
         required: true
-      - type: enum
-        name: layout_style
-        label: Layout Style
-        description: The style of the theme layout
-        options:
-          - grid
-          - list
-        default: grid
-      - type: enum
-        name: palette
-        label: Color Palette
-        description: The color palette of the theme.
-        options:
-          - green
-          - blue
-          - black
-          - red
-        default: green
+      - type: string
+        name: baseURL
+        label: Base URL
+        description: Hostname (and path) to the root
+        hidden: true
       - type: object
-        name: header
-        label: Header Configuration
+        name: params
+        label: Params
+        description: Site parameters
+        required: true
         fields:
           - type: string
-            name: title
-            label: Header Title
-            description: The title displayed in the header if no logo image added.
-          - type: image
-            name: logo_img
-            label: Logo
-            description: The logo image displayed in the header.
-          - type: boolean
-            name: has_nav
-            label: Enable Navigation Menu
-            description: Display the navigation menu bar in the header.
-            default: true
+            name: description
+            label: Site Description
+            description: The default site description used in meta data.
+          - type: enum
+            name: layout_style
+            label: Layout Style
+            description: The style of the theme layout
+            options:
+              - grid
+              - list
+            default: grid
+          - type: enum
+            name: palette
+            label: Color Palette
+            description: The color palette used for the site.
+            options:
+              - black
+              - blue
+              - green
+              - red
+            default: green
+          - type: model
+            name: header
+            label: Header Configuration
+            models:
+              - header
+          - type: model
+            name: footer
+            label: Footer Configuration
+            models:
+              - footer
       - type: object
-        name: footer
-        label: Footer Configuration
+        name: taxonomies
+        label: Taxonomies
+        hidden: true
         fields:
           - type: string
-            name: content
-            label: Footer Content
-            description: The copyright text displayed in the footer.
-          - type: list
-            name: links
-            label: Links
-            description: A list of links displayed in the footer.
-            items:
-              type: object
-              labelField: text
-              fields:
-                - type: string
-                  name: text
-                  label: Link text
-                - type: string
-                  name: url
-                  label: URL
-                  widget: url
-                - type: boolean
-                  name: new_window
-                  label: Open in new window
-                  default: true
-          - type: boolean
-            name: has_social
-            label: Enable Social Links
-            description: Display social links in the footer.
-            default: true
-  social:
-    type: data
-    file: social.json
-    label: Social Links
+            label: Stub
+            name: stub
+            const: stub
+            hidden: true
+      - type: list
+        name: disableKinds
+        label: Disable Kinds
+        description: Enable disabling of all pages of the specified Kinds.
+        items:
+          type: enum
+          options:
+            - page
+            - home
+            - section
+            - taxonomy
+            - taxonomyTerm
+            - RSS
+            - sitemap
+            - robotsTXT
+            - '404'
+        hidden: true
+      - type: boolean
+        name: uglyURLs
+        label: Ugly URLs
+        description: >-
+          When enabled, creates URL of the form /filename.html instead of
+          /filename/.
+        hidden: true
+  header:
+    type: object
+    label: Header Configuration
+    labelField: title
     fields:
+      - type: string
+        name: title
+        label: Header Title
+        description: The title displayed in the header if no logo image added.
+      - type: image
+        name: logo_img
+        label: Logo
+        description: The logo image displayed in the header.
+      - type: boolean
+        name: has_nav
+        label: Enable Navigation Menu
+        description: Display the navigation menu bar in the header.
+        default: true
+      - type: list
+        name: nav_links
+        label: Navigation Links
+        description: List of navigation links.
+        items:
+          type: model
+          models:
+            - action
+  footer:
+    type: object
+    label: Footer Configuration
+    labelField: content
+    fields:
+      - type: string
+        name: content
+        label: Footer Content
+        description: The copyright text displayed in the footer.
       - type: list
         name: links
-        label: Social Links
-        description: A list of social links displayed in the footer.
+        label: Links
+        description: List of links in the footer.
         items:
-          type: object
-          labelField: title
-          fields:
-            - type: string
-              name: type
-              label: Type
-              hidden: true
-            - type: string
-              name: title
-              label: Title
-            - type: string
-              name: icon
-              label: Icon
-              description: Font Awesome icon class name.
-              required: true
-            - type: string
-              name: url
-              label: URL
-              widget: url
-  author:
-    type: data
-    file: author.json
-    label: Author
-    fields:
+          type: model
+          models:
+            - action
+      - type: boolean
+        name: has_social
+        label: Enable Social Links
+        description: Display social links in the footer.
+        default: true
+      - type: list
+        name: social_links
+        label: Social Links
+        description: List of social links in the footer.
+        items:
+          type: model
+          models:
+            - action
+      - type: boolean
+        name: has_subscribe
+        label: Enable Subscribe Section
+        description: Display the newsletter subscription section in the footer.
+        default: true
       - type: string
-        name: name
-        label: Name
+        name: subscribe_title
+        label: Title
+        description: The title of the subscribe section.
       - type: string
-        name: email
-        label: Email
-      - type: image
-        name: avatar
-        label: Avatar
+        name: subscribe_content
+        label: Content
+        description: The text content of the subscribe section.
+      - type: string
+        name: subscribe_action
+        label: Subscribe Form Action
+        description: >-
+          The path of your custom "success" page, if you want to replace the
+          default success message.
   home:
     type: page
+    urlPath: /
     label: Home
-    template: home
-    file: index.md
+    layout: home
+    file: _index.md
     hideContent: true
     singleInstance: true
     fields:
@@ -263,23 +293,39 @@ models:
           The title of the page. If value is not set, the author name will be
           used.
         required: true
+      - type: string
+        name: excerpt
+        label: Excerpt
+        description: The excerpt of the page displayed in meta data.
+      - type: boolean
+        name: has_intro
+        label: Enable Intro Section
+        description: Display the intro section below the site header.
+        default: true
+      - type: markdown
+        name: intro_content
+        label: Intro Section Content
+        description: The text content of the intro section.
       - type: list
-        name: sections
-        label: Sections
-        description: Home page sections
+        name: intro_actions
+        label: Intro Action Buttons
         items:
-          type: reference
-          labelField: title
+          type: model
           models:
-            - intro
-      - type: page_menus
-        name: menus
-        label: Home Menus
-        description: Which menus should this page show up in
+            - action
+      - type: boolean
+        name: has_more_link
+        label: Show read more link
+        description: Display the read more link in the post feed
+        default: true
+      - type: string
+        name: more_link_text
+        label: Read more link label
   contact:
     type: page
+    urlPath: /contact
     label: Contact
-    template: contact
+    layout: contact
     file: contact.md
     singleInstance: true
     fields:
@@ -292,18 +338,40 @@ models:
         name: subtitle
         label: Subtitle
         description: The text shown just below the page title.
+      - type: string
+        name: excerpt
+        label: Excerpt
+        description: The excerpt of the page displayed in meta data.
       - type: image
         name: img_path
         label: Image
         description: The image shown below the page title and subtitle.
-      - type: page_menus
-        name: menus
-        label: Contact Menus
-        description: Which menus should this page show up in
+      - type: string
+        name: form_id
+        label: Form ID
+        description: A unique identifier of the form. Must not contain whitespace.
+        required: true
+      - type: string
+        name: form_action
+        label: Form Action
+        description: >-
+          The path of your custom "success" page, if you want to replace the
+          default success message.
+      - type: list
+        name: form_fields
+        label: Form Fields
+        items:
+          type: model
+          models:
+            - form_field
+      - type: string
+        name: submit_label
+        label: Submit Button Label
+        required: true
   page:
     type: page
     label: Page
-    template: page
+    layout: page
     exclude: posts/**
     fields:
       - type: string
@@ -315,18 +383,19 @@ models:
         name: subtitle
         label: Subtitle
         description: The text shown just below the page title.
+      - type: string
+        name: excerpt
+        label: Excerpt
+        description: The excerpt of the page displayed in meta data.
       - type: image
         name: img_path
         label: Image
         description: The image shown below the page title and subtitle.
-      - type: page_menus
-        name: menus
-        label: Page Menus
-        description: Which menus should this page show up in
   post:
     type: page
+    urlPath: '/posts/{slug}'
     label: Post
-    template: post
+    layout: post
     folder: posts
     fields:
       - type: string
@@ -353,47 +422,7 @@ models:
       - type: string
         name: excerpt
         label: Excerpt
-        description: The excerpt of the post displayed in the blog feed.
-      - type: page_menus
-        name: menus
-        label: Post Menus
-        description: Which menus should this page show up in
-  subscribe:
-    type: data
-    file: subscribe.json
-    label: Subscribe
-    fields:
-      - type: boolean
-        name: enabled
-        label: Enable Subscribe Section
-        description: Display the newsletter subscription section in the footer.
-        default: true
-      - type: string
-        name: title
-        label: Title
-        description: The title of the subscribe section
-      - type: string
-        name: content
-        label: Content
-        description: The text content of the subscribe section
-  section:
-    type: object
-    label: Section
-    labelField: title
-    fields:
-      - type: string
-        name: title
-        label: Title
-        description: The title of the section
-        required: true
-      - type: string
-        name: section_id
-        label: Element ID
-      - type: string
-        name: component
-        label: Component
-        required: true
-        hidden: true
+        description: The excerpt of the post displayed in the blog feed and meta data.
   action:
     type: object
     label: Action
@@ -403,97 +432,63 @@ models:
         name: label
         label: Label
         required: true
-        description: The text displayed inside the button
-      - type: string
-        name: url
-        label: Button URL
-        widget: url
-  intro:
-    type: object
-    label: Intro Section
-    extends:
-      - section
-    fields:
-      - name: component
-        default: Intro
-      - type: markdown
-        name: content
-        label: Content
-        description: The text content of the section.
-      - type: list
-        name: actions
-        label: Action Buttons
-        items:
-          type: action
-  site_menus:
-    type: data
-    file: menus.json
-    label: Site Menus
-    labelField: null
-    description: >-
-      Site menus model, defines list of menus that can be specified from within
-      site configuration
-    fields:
-      - type: list
-        name: main
-        label: Main menu
-        description: List of items for Main menu
-        items:
-          type: site_menu_item
-  site_menu_item:
-    type: object
-    label: Site Menu Item
-    labelField: title
-    description: 'Site menu item model, defines fields for a single site menu item'
-    fields:
-      - type: string
-        name: identifier
-        label: Identifier
-        description: >-
-          The identifier of a menu item could be used as a parent menu of
-          another menu item
-        required: true
-      - type: string
-        name: title
-        label: Title
-        description: The title of the menu item
-        required: true
       - type: string
         name: url
         label: URL
-        description: The URL the menu item links to
         required: true
-      - type: number
-        name: weight
-        label: Weight
-        description: Position for sorting
-  page_menus:
-    type: object
-    label: Page Menus
-    labelField: null
-    description: 'Page menus model, defines menus that can be specified from within pages'
-    fields:
-      - type: page_menu_item
-        name: main
-        label: Main menu item
-        description: Main menu item for this page
-  page_menu_item:
-    type: object
-    label: Page Menu Item
-    labelField: title
-    description: 'Page menu item model, defines fields for a single page menu item'
-    fields:
+        widget: url
+      - type: enum
+        name: style
+        label: Style
+        options:
+          - link
+          - primary
+          - secondary
+          - icon
+        default: link
+        required: true
       - type: string
-        name: title
-        label: Title
-        description: The title of the menu item
-      - type: number
-        name: weight
-        label: Weight
-        description: Position for sorting
+        name: icon_class
+        label: Icon
+        description: 'Font Awesome icon class name, used only when style is "icon".'
+      - type: boolean
+        name: new_window
+        label: Open in new tab/window
+        default: false
+  form_field:
+    type: object
+    label: Form Field
+    labelField: name
+    fields:
+      - type: enum
+        name: input_type
+        label: Type
+        options:
+          - text
+          - email
+          - tel
+          - number
+          - checkbox
+          - textarea
+          - select
+        description: Type of the form field.
+        required: true
       - type: string
-        name: identifier
-        label: Identifier
-        description: >-
-          The identifier of a menu item could be used as a parent menu of
-          another menu item
+        name: name
+        label: Name
+        description: 'The name of the field, submitted with the form.'
+        required: true
+      - type: string
+        name: label
+        label: Label
+        description: 'The caption of the field, shown above the field input.'
+      - type: string
+        name: default_value
+        description: The default value for textual field types.
+      - type: list
+        name: options
+        description: 'The list of options, used only when the field type is "select".'
+      - type: boolean
+        name: is_required
+        label: Is the field required?
+        default: false

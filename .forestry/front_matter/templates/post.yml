@@ -28,15 +28,15 @@ fields:
 - type: text
   name: excerpt
   label: Excerpt
-  description: The excerpt of the post displayed in the blog feed.
+  description: The excerpt of the post displayed in the blog feed and meta data.
 - type: text
-  name: template
-  label: Template
+  name: layout
+  label: Layout
   hidden: true
   default: post
   config:
     required: true
 pages:
-- src/pages/posts/basic-rules-for-walking-in-the-mountains.md
-- src/pages/posts/lean-vs-agile-the-lean-manifesto.md
-- src/pages/posts/migrate-your-legacy-now-and-migrate-it-to-serverless.md
+- content/posts/basic-rules-for-walking-in-the-mountains.md
+- content/posts/lean-vs-agile-the-lean-manifesto.md
+- content/posts/migrate-your-legacy-now-and-migrate-it-to-serverless.md

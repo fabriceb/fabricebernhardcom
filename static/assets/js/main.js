@@ -1,4 +1,3 @@
-window.onGatsbyRouteUpdate = function() {
 /**
  * Main JS file for theme behaviours
  */
@@ -23,10 +22,8 @@ if (menuToggle) {
   document.body.classList.remove('menu--opened');
 
   window.addEventListener('resize', function () {
-    if (menuToggle.offsetParent === null) {
+    if (menuToggle[0].offsetParent === null) {
       document.body.classList.remove('menu--opened');
     }
   }, true);
 }
-
-};
