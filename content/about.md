@@ -14,7 +14,7 @@ Theodo is a lean software consultancy whose mission is to transform our clients 
 
 #### The longer version
 
-I started coding when I was 11. Initially in QBasic on my dad's 286. I then got to tinker with a wide range of tech. From C++/DirectX to port my QBasic games to Windows 95). HTML/JScript/VBScript - 1996 web technology! - to publish them on the web. Fortunately that website disappeared! And 68k assembly to write games for my TI92 calculator. My math teacher had made the mistake of allowing games in class... if you had coded them :-)
+I started coding when I was 11. Initially in QBasic on my dad's 286. I then got to tinker with a wide range of tech. From C++/DirectX to port my QBasic games to Windows 95. HTML/JScript/VBScript - 1996 web technology! - to publish them on the web. Fortunately that website disappeared! And 68k assembly to write games for my TI92 calculator. My math teacher had made the mistake of allowing games in class... if you had coded them :-)
 
 Programming on 68k even got me into my first "venture", an e-commerce website to sell home-made cables to connect your PC to your TI calculator. I sold 5 of them!
 
